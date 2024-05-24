@@ -2,15 +2,13 @@
 
 A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+=> use Restful Apis to make an Application
+=>its a responsive Application for both Android and ios
+=>on doudle tap on any list or card go to detail screen
+=> create login page with REstful Apis
+=> Add favoriye screen 
+=>use real time graph which changes in Real time
+=> Home screen which show task list 
+=> Add Local storage like shared prefrence to store data 
+=>use Provider statmangment
+=>Follow MvvM Architecure
