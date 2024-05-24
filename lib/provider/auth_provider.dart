@@ -1,15 +1,35 @@
 
 
+
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
-  bool _isLoggedIn = false; // Define the isLoggedIn property
-  bool get isLoggedIn => _isLoggedIn; // Define the getter
+  bool _isLoggedIn = false;
+  bool get isLoggedIn => _isLoggedIn;
 
   bool _loading = false;
   bool get loading => _loading;
+
+  AuthProvider() {
+    _loadLoggedInStatus();
+  }
+
+  void _loadLoggedInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    notifyListeners();
+  }
+
+  void _setLoggedInStatus(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', value);
+    _isLoggedIn = value;
+    notifyListeners();
+  }
 
   setLoading(bool value) {
     _loading = value;
@@ -28,11 +48,13 @@ class AuthProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        setLoading(false);
-        _isLoggedIn = true; // Set isLoggedIn to true after successful login
         var data = jsonDecode(response.body);
         print(data['token']);
         print('Login successfully');
+
+        _setLoggedInStatus(true);
+        setLoading(false);
+
         // Show success dialog
         showDialog(
           context: context,
@@ -57,5 +79,9 @@ class AuthProvider with ChangeNotifier {
       setLoading(false);
       print(e.toString());
     }
+  }
+
+  Future<void> logout() async {
+    _setLoggedInStatus(false);
   }
 }
